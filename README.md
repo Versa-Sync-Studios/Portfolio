@@ -14,8 +14,8 @@ npm install
 Create `.env.local` with:
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://pmaxbdkspezaivhccjpy.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_mnc4NUHkR-Ctmja3_NEUKg_Aakd181F
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
