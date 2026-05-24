@@ -14,6 +14,12 @@ export type TechStackCategory =
   | "no_code"
   | "tools";
 
+export type ProjectScreenshot = {
+  url: string;
+  caption?: string | null;
+  alt?: string | null;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -83,6 +89,13 @@ export type Database = {
           impact: string | null;
           image_url: string | null;
           cover_image_url: string | null;
+          status: string | null;
+          video_url: string | null;
+          problem: string | null;
+          my_role: string | null;
+          solution: string | null;
+          outcome: string | null;
+          screenshots: ProjectScreenshot[];
           repo_url: string | null;
           live_url: string | null;
           case_study_url: string | null;
@@ -107,6 +120,13 @@ export type Database = {
           impact?: string | null;
           image_url?: string | null;
           cover_image_url?: string | null;
+          status?: string | null;
+          video_url?: string | null;
+          problem?: string | null;
+          my_role?: string | null;
+          solution?: string | null;
+          outcome?: string | null;
+          screenshots?: ProjectScreenshot[];
           repo_url?: string | null;
           live_url?: string | null;
           case_study_url?: string | null;
@@ -131,6 +151,13 @@ export type Database = {
           impact?: string | null;
           image_url?: string | null;
           cover_image_url?: string | null;
+          status?: string | null;
+          video_url?: string | null;
+          problem?: string | null;
+          my_role?: string | null;
+          solution?: string | null;
+          outcome?: string | null;
+          screenshots?: ProjectScreenshot[];
           repo_url?: string | null;
           live_url?: string | null;
           case_study_url?: string | null;
