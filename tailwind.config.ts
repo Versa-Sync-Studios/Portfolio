@@ -9,6 +9,7 @@ const config = {
       colors: {
         background: "var(--color-background)",
         foreground: "var(--color-foreground)",
+        bg: "var(--color-bg)",
         surface: "var(--color-surface)",
         "surface-subtle": "var(--color-surface-subtle)",
         border: "var(--color-border)",
@@ -21,6 +22,12 @@ const config = {
         success: "var(--color-success)",
         warning: "var(--color-warning)",
         danger: "var(--color-danger)",
+        "text-primary": "var(--color-text-primary)",
+        "text-secondary": "var(--color-text-secondary)",
+        "text-muted": "var(--color-text-muted)",
+      },
+      boxShadow: {
+        "card-accent": "0 0 0 1px var(--color-accent)",
       },
       fontFamily: {
         display: "var(--font-syne)",

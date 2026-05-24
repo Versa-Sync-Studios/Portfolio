@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Syne } from "next/font/google";
 import type { ReactNode } from "react";
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
 const syne = Syne({
@@ -41,7 +43,9 @@ export default function RootLayout({
       className={`${syne.variable} ${inter.variable} ${jetBrainsMono.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground antialiased">
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

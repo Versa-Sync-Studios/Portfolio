@@ -6,6 +6,14 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+export type TechStackCategory =
+  | "frontend"
+  | "backend"
+  | "mobile"
+  | "database"
+  | "no_code"
+  | "tools";
+
 export type Database = {
   public: {
     Tables: {
@@ -68,15 +76,19 @@ export type Database = {
           id: string;
           title: string;
           slug: string;
+          domain: string | null;
+          tagline: string | null;
           summary: string;
           description: string;
           impact: string | null;
           image_url: string | null;
+          cover_image_url: string | null;
           repo_url: string | null;
           live_url: string | null;
           case_study_url: string | null;
           tech_stack: string[];
           featured: boolean;
+          featured_order: number;
           is_published: boolean;
           sort_order: number;
           started_at: string | null;
@@ -88,15 +100,19 @@ export type Database = {
           id?: string;
           title: string;
           slug: string;
+          domain?: string | null;
+          tagline?: string | null;
           summary: string;
           description: string;
           impact?: string | null;
           image_url?: string | null;
+          cover_image_url?: string | null;
           repo_url?: string | null;
           live_url?: string | null;
           case_study_url?: string | null;
           tech_stack?: string[];
           featured?: boolean;
+          featured_order?: number;
           is_published?: boolean;
           sort_order?: number;
           started_at?: string | null;
@@ -108,15 +124,19 @@ export type Database = {
           id?: string;
           title?: string;
           slug?: string;
+          domain?: string | null;
+          tagline?: string | null;
           summary?: string;
           description?: string;
           impact?: string | null;
           image_url?: string | null;
+          cover_image_url?: string | null;
           repo_url?: string | null;
           live_url?: string | null;
           case_study_url?: string | null;
           tech_stack?: string[];
           featured?: boolean;
+          featured_order?: number;
           is_published?: boolean;
           sort_order?: number;
           started_at?: string | null;
@@ -294,6 +314,105 @@ export type Database = {
         };
         Relationships: [];
       };
+      resume_meta: {
+        Row: {
+          id: string;
+          label: string;
+          file_url: string;
+          active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          label?: string;
+          file_url: string;
+          active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          label?: string;
+          file_url?: string;
+          active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      tech_stack_items: {
+        Row: {
+          id: string;
+          name: string;
+          category: TechStackCategory;
+          icon_url: string | null;
+          sort_order: number;
+          visible: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          category: TechStackCategory;
+          icon_url?: string | null;
+          sort_order?: number;
+          visible?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          category?: TechStackCategory;
+          icon_url?: string | null;
+          sort_order?: number;
+          visible?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      client_testimonials: {
+        Row: {
+          id: string;
+          quote: string;
+          client_name: string;
+          client_title: string | null;
+          client_company: string | null;
+          avatar_url: string | null;
+          visible: boolean;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          quote: string;
+          client_name: string;
+          client_title?: string | null;
+          client_company?: string | null;
+          avatar_url?: string | null;
+          visible?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          quote?: string;
+          client_name?: string;
+          client_title?: string | null;
+          client_company?: string | null;
+          avatar_url?: string | null;
+          visible?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -322,3 +441,8 @@ export type TablesInsert<
 export type TablesUpdate<
   TableName extends keyof Database["public"]["Tables"],
 > = Database["public"]["Tables"][TableName]["Update"];
+
+export type Project = Tables<"projects">;
+export type ResumeMeta = Tables<"resume_meta">;
+export type TechStackItem = Tables<"tech_stack_items">;
+export type ClientTestimonial = Tables<"client_testimonials">;
