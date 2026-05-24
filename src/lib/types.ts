@@ -425,7 +425,9 @@ export type Database = {
         Returns: unknown;
       };
     };
-    Enums: Record<string, never>;
+    Enums: {
+      tech_stack_category: TechStackCategory;
+    };
     CompositeTypes: Record<string, never>;
   };
 };
