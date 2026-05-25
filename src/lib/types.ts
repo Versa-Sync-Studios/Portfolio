@@ -20,6 +20,14 @@ export type ProjectScreenshot = {
   alt?: string | null;
 };
 
+export type SiteConfigKey =
+  | "about_bio"
+  | "how_i_work"
+  | "looking_for"
+  | "email"
+  | "linkedin_url"
+  | "github_url";
+
 export type Database = {
   public: {
     Tables: {
@@ -338,6 +346,60 @@ export type Database = {
         };
         Relationships: [];
       };
+      contact_submissions: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          company: string | null;
+          message: string;
+          status: "unread" | "read" | "archived";
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          company?: string | null;
+          message: string;
+          status?: "unread";
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          email?: string;
+          company?: string | null;
+          message?: string;
+          status?: "unread" | "read" | "archived";
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      site_config: {
+        Row: {
+          key: string;
+          value: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          key: string;
+          value: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          key?: string;
+          value?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       resume_meta: {
         Row: {
           id: string;
@@ -513,3 +575,6 @@ export type Project = Tables<"projects"> & {
   project_tech_stack?: ProjectTechStack[];
 };
 export type ClientTestimonial = Tables<"client_testimonials">;
+export type SiteConfig = Tables<"site_config">;
+export type ContactSubmission = Tables<"contact_submissions">;
+export type ContactSubmissionInsert = TablesInsert<"contact_submissions">;
