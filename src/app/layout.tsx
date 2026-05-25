@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Syne } from "next/font/google";
 import type { ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
@@ -43,6 +44,16 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground antialiased">
         <Navbar />
         {children}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "var(--color-surface)",
+              border: "1px solid var(--color-border)",
+              color: "var(--color-text-primary)",
+            },
+          }}
+        />
         <Footer />
       </body>
     </html>

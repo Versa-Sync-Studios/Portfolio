@@ -85,3 +85,82 @@ If you are given a new task and are unsure which component or file to edit:
 ## Stack Summary
 Portfolio Site: Next.js 14 · TypeScript · Tailwind v4 · Supabase · Framer Motion · Vercel
 Admin App: React 18 · Vite · TypeScript · Tailwind v4 · shadcn/ui · React Hook Form · Zustand · Supabase
+
+## Admin Section (app/(admin)/*)
+
+The admin is a protected Next.js App Router route group inside the 
+portfolio site. It shares the same Supabase project, types, and 
+environment variables as the public site.
+
+### Admin UI Design Philosophy
+Think Vercel dashboard, Linear, Supabase dashboard.
+Flat, functional, data-dense. NOT decorative.
+
+Rules:
+- Base font size is text-sm everywhere in admin
+- Tight spacing: p-3 or p-4 on cards, not p-6 or p-8
+- Tables over cards wherever data is list-like
+- Borders (border border-border) not box shadows
+- No page heroes, no eyebrow text, no large display headings
+- Page title: text-lg font-semibold text-text-primary only
+- Accent colour ONLY on: active nav, primary CTA, success states
+- No gradients, no glassmorphism, no animate-everything
+- Colour on badges only where it carries meaning:
+    live → text-accent
+    in_progress → text-warning  
+    archived → text-text-muted
+    unread → text-accent
+
+### Admin Route Structure
+app/
+  (admin)/
+    layout.tsx          ← auth check + admin shell layout
+    middleware check via src/middleware.ts
+    projects/
+      page.tsx          ← projects list
+      new/
+        page.tsx        ← create project form
+      [id]/
+        edit/
+          page.tsx      ← edit project form
+    tech-stack/
+      page.tsx
+    testimonials/
+      page.tsx
+    contact/
+      page.tsx
+    resume/
+      page.tsx
+    settings/
+      page.tsx
+    mfa/
+      setup/
+        page.tsx        ← TOTP setup page
+      verify/
+        page.tsx        ← TOTP verify after login
+
+### Admin Auth Flow
+1. User hits any /admin/* route
+2. middleware.ts checks Supabase session
+3. No session → redirect to /admin/login
+4. Session exists but MFA not verified → redirect to /admin/mfa/verify
+5. Session + MFA verified → allow through to admin
+
+### Admin-specific components live at:
+src/components/admin/   ← admin UI primitives
+  AdminLayout.tsx       ← sidebar + main content shell
+  AdminSidebar.tsx      ← nav sidebar
+  DataTable.tsx         ← reusable table component
+  RichTextEditor.tsx    ← TipTap editor (dark themed)
+  FileUpload.tsx        ← Supabase Storage upload with progress
+
+### Shared with public site:
+- src/lib/supabase/client.ts and server.ts
+- src/lib/types.ts
+- CSS variables and Tailwind config
+- Supabase environment variables
+
+### Additional dependencies needed for admin:
+npm install @tiptap/react @tiptap/pm @tiptap/starter-kit 
+@tiptap/extension-placeholder react-hot-toast
+npm install @supabase/auth-helpers-nextjs
