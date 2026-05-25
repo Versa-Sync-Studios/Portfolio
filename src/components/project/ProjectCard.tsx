@@ -11,6 +11,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const imageSrc = project.cover_image_url ?? project.image_url ?? "/window.svg";
   const tagline = project.tagline ?? project.summary;
   const domain = project.domain ?? "Product";
+  const techStack = [...(project.project_tech_stack ?? [])].sort(
+    (firstItem, secondItem) => firstItem.sort_order - secondItem.sort_order,
+  );
+  const visibleTechStack = techStack.slice(0, 4);
+  const hiddenTechStackCount = techStack.length - visibleTechStack.length;
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface transition hover:translate-y-1 hover:border-accent hover:shadow-card-accent">
@@ -20,7 +25,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           alt={`${project.title} cover`}
           fill
           sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-cover"
+          className="object-contain p-3"
         />
       </div>
 
@@ -37,14 +42,29 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <p className="mt-2 text-sm leading-6 text-text-secondary">{tagline}</p>
 
         <div className="mt-5 flex flex-wrap gap-2">
-          {project.tech_stack.slice(0, 4).map((item) => (
+          {visibleTechStack.map((item) => (
             <span
-              key={item}
-              className="rounded-full border border-border px-2 py-0.5 font-mono text-xs text-text-muted"
+              key={item.id}
+              className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 font-mono text-xs text-text-muted"
             >
-              {item}
+              {item.tech_stack_items.icon_url ? (
+                <Image
+                  src={item.tech_stack_items.icon_url}
+                  alt=""
+                  width={16}
+                  height={16}
+                  loading="lazy"
+                  className="h-4 w-4"
+                />
+              ) : null}
+              {item.tech_stack_items.name}
             </span>
           ))}
+          {hiddenTechStackCount > 0 ? (
+            <span className="inline-flex items-center rounded-full border border-border px-2 py-0.5 font-mono text-xs text-text-muted">
+              +{hiddenTechStackCount} more
+            </span>
+          ) : null}
         </div>
 
         <div className="mt-6 flex items-center justify-between gap-4 border-t border-border pt-4 text-sm">

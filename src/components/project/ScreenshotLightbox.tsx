@@ -33,7 +33,7 @@ export function ScreenshotLightbox({
                 alt={screenshot.alt ?? `${projectTitle} screenshot ${index + 1}`}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover transition-opacity group-hover:opacity-90"
+                className="object-contain p-3 transition-opacity group-hover:opacity-90"
               />
             </span>
             {screenshot.caption ? (

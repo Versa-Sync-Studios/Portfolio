@@ -99,7 +99,6 @@ export type Database = {
           repo_url: string | null;
           live_url: string | null;
           case_study_url: string | null;
-          tech_stack: string[];
           featured: boolean;
           featured_order: number;
           is_published: boolean;
@@ -130,7 +129,6 @@ export type Database = {
           repo_url?: string | null;
           live_url?: string | null;
           case_study_url?: string | null;
-          tech_stack?: string[];
           featured?: boolean;
           featured_order?: number;
           is_published?: boolean;
@@ -161,7 +159,6 @@ export type Database = {
           repo_url?: string | null;
           live_url?: string | null;
           case_study_url?: string | null;
-          tech_stack?: string[];
           featured?: boolean;
           featured_order?: number;
           is_published?: boolean;
@@ -401,6 +398,42 @@ export type Database = {
         };
         Relationships: [];
       };
+      project_tech_stack: {
+        Row: {
+          id: string;
+          project_id: string;
+          tech_stack_item_id: string;
+          sort_order: number;
+        };
+        Insert: {
+          id?: string;
+          project_id: string;
+          tech_stack_item_id: string;
+          sort_order?: number;
+        };
+        Update: {
+          id?: string;
+          project_id?: string;
+          tech_stack_item_id?: string;
+          sort_order?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "project_tech_stack_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "project_tech_stack_tech_stack_item_id_fkey";
+            columns: ["tech_stack_item_id"];
+            isOneToOne: false;
+            referencedRelation: "tech_stack_items";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       client_testimonials: {
         Row: {
           id: string;
@@ -471,7 +504,12 @@ export type TablesUpdate<
   TableName extends keyof Database["public"]["Tables"],
 > = Database["public"]["Tables"][TableName]["Update"];
 
-export type Project = Tables<"projects">;
 export type ResumeMeta = Tables<"resume_meta">;
 export type TechStackItem = Tables<"tech_stack_items">;
+export type ProjectTechStack = Tables<"project_tech_stack"> & {
+  tech_stack_items: TechStackItem;
+};
+export type Project = Tables<"projects"> & {
+  project_tech_stack?: ProjectTechStack[];
+};
 export type ClientTestimonial = Tables<"client_testimonials">;

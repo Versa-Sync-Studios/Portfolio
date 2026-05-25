@@ -53,9 +53,33 @@ async function getAllProjects() {
 
   const { data } = await supabase
     .from("projects")
-    .select("*")
+    .select(
+      `
+      *,
+      project_tech_stack (
+        id,
+        project_id,
+        tech_stack_item_id,
+        sort_order,
+        tech_stack_items (
+          id,
+          name,
+          icon_url,
+          category,
+          sort_order,
+          visible,
+          created_at,
+          updated_at
+        )
+      )
+    `,
+    )
     .order("featured_order", { ascending: true, nullsFirst: false })
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .order("sort_order", {
+      ascending: true,
+      referencedTable: "project_tech_stack",
+    });
 
   return (data ?? []) satisfies Project[];
 }
@@ -65,8 +89,32 @@ async function getProjectBySlug(slug: string) {
 
   const { data } = await supabase
     .from("projects")
-    .select("*")
+    .select(
+      `
+      *,
+      project_tech_stack (
+        id,
+        project_id,
+        tech_stack_item_id,
+        sort_order,
+        tech_stack_items (
+          id,
+          name,
+          icon_url,
+          category,
+          sort_order,
+          visible,
+          created_at,
+          updated_at
+        )
+      )
+    `,
+    )
     .eq("slug", slug)
+    .order("sort_order", {
+      ascending: true,
+      referencedTable: "project_tech_stack",
+    })
     .maybeSingle();
 
   return data satisfies Project | null;
@@ -158,6 +206,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const coverImage = project.cover_image_url ?? project.image_url;
   const videoEmbedUrl = project.video_url ? getLoomEmbedUrl(project.video_url) : null;
   const { previousProject, nextProject } = getAdjacentProjects(projects, slug);
+  const techStack = [...(project.project_tech_stack ?? [])].sort(
+    (firstItem, secondItem) => firstItem.sort_order - secondItem.sort_order,
+  );
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -221,12 +272,22 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           </div>
 
           <div className="mt-5 flex flex-wrap gap-2">
-            {project.tech_stack.map((item) => (
+            {techStack.map((item) => (
               <span
-                key={item}
-                className="rounded-full border border-accent/30 px-3 py-1 font-mono text-xs text-accent"
+                key={item.id}
+                className="inline-flex items-center gap-2 rounded-full border border-accent/30 px-3 py-1 font-mono text-xs text-accent"
               >
-                {item}
+                {item.tech_stack_items.icon_url ? (
+                  <Image
+                    src={item.tech_stack_items.icon_url}
+                    alt=""
+                    width={24}
+                    height={24}
+                    loading="lazy"
+                    className="h-6 w-6"
+                  />
+                ) : null}
+                {item.tech_stack_items.name}
               </span>
             ))}
           </div>
@@ -240,7 +301,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               fill
               priority
               sizes="(min-width: 1024px) 960px, 100vw"
-              className="object-cover"
+              className="object-contain p-4"
             />
           </div>
         ) : null}

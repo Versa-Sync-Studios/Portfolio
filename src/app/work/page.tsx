@@ -7,9 +7,33 @@ async function getProjects() {
 
   const { data } = await supabase
     .from("projects")
-    .select("*")
+    .select(
+      `
+      *,
+      project_tech_stack (
+        id,
+        project_id,
+        tech_stack_item_id,
+        sort_order,
+        tech_stack_items (
+          id,
+          name,
+          icon_url,
+          category,
+          sort_order,
+          visible,
+          created_at,
+          updated_at
+        )
+      )
+    `,
+    )
     .order("featured_order", { ascending: true, nullsFirst: false })
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .order("sort_order", {
+      ascending: true,
+      referencedTable: "project_tech_stack",
+    });
 
   return (data ?? []) satisfies Project[];
 }

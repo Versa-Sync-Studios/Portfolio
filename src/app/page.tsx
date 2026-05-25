@@ -44,9 +44,33 @@ async function getHomeData() {
         .maybeSingle(),
       supabase
         .from("projects")
-        .select("*")
+        .select(
+          `
+          *,
+          project_tech_stack (
+            id,
+            project_id,
+            tech_stack_item_id,
+            sort_order,
+            tech_stack_items (
+              id,
+              name,
+              icon_url,
+              category,
+              sort_order,
+              visible,
+              created_at,
+              updated_at
+            )
+          )
+        `,
+        )
         .eq("featured", true)
-        .order("featured_order", { ascending: true }),
+        .order("featured_order", { ascending: true })
+        .order("sort_order", {
+          ascending: true,
+          referencedTable: "project_tech_stack",
+        }),
       supabase
         .from("tech_stack_items")
         .select("*")
