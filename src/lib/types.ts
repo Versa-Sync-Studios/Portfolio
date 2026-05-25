@@ -14,10 +14,10 @@ export type TechStackCategory =
   | "no_code"
   | "tools";
 
-export type ProjectScreenshot = {
+export type Screenshot = {
   url: string;
-  caption?: string | null;
-  alt?: string | null;
+  caption?: string;
+  order: number;
 };
 
 export type SiteConfigKey =
@@ -92,10 +92,6 @@ export type Database = {
           slug: string;
           domain: string | null;
           tagline: string | null;
-          summary: string;
-          description: string;
-          impact: string | null;
-          image_url: string | null;
           cover_image_url: string | null;
           status: string | null;
           video_url: string | null;
@@ -103,10 +99,9 @@ export type Database = {
           my_role: string | null;
           solution: string | null;
           outcome: string | null;
-          screenshots: ProjectScreenshot[];
+          screenshots: Screenshot[];
           repo_url: string | null;
           live_url: string | null;
-          case_study_url: string | null;
           featured: boolean;
           featured_order: number;
           is_published: boolean;
@@ -122,10 +117,6 @@ export type Database = {
           slug: string;
           domain?: string | null;
           tagline?: string | null;
-          summary: string;
-          description: string;
-          impact?: string | null;
-          image_url?: string | null;
           cover_image_url?: string | null;
           status?: string | null;
           video_url?: string | null;
@@ -133,10 +124,9 @@ export type Database = {
           my_role?: string | null;
           solution?: string | null;
           outcome?: string | null;
-          screenshots?: ProjectScreenshot[];
+          screenshots?: Screenshot[];
           repo_url?: string | null;
           live_url?: string | null;
-          case_study_url?: string | null;
           featured?: boolean;
           featured_order?: number;
           is_published?: boolean;
@@ -152,10 +142,6 @@ export type Database = {
           slug?: string;
           domain?: string | null;
           tagline?: string | null;
-          summary?: string;
-          description?: string;
-          impact?: string | null;
-          image_url?: string | null;
           cover_image_url?: string | null;
           status?: string | null;
           video_url?: string | null;
@@ -163,10 +149,9 @@ export type Database = {
           my_role?: string | null;
           solution?: string | null;
           outcome?: string | null;
-          screenshots?: ProjectScreenshot[];
+          screenshots?: Screenshot[];
           repo_url?: string | null;
           live_url?: string | null;
-          case_study_url?: string | null;
           featured?: boolean;
           featured_order?: number;
           is_published?: boolean;

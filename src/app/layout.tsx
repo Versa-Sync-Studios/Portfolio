@@ -27,9 +27,7 @@ export const metadata: Metadata = {
   title: "Sai Ganesh | Full-Stack Product Engineer",
   description:
     "Portfolio for Sai Ganesh, a full-stack product engineer building polished web products.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  ),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL as string),
 };
 
 export default function RootLayout({

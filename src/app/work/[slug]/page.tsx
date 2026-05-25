@@ -177,13 +177,23 @@ export async function generateMetadata({
     };
   }
 
-  const description = project.tagline ?? project.summary;
+  const description = project.tagline ?? project.title;
   const images = project.cover_image_url ? [project.cover_image_url] : undefined;
 
   return {
     title: `${project.title} | Sai Ganesh`,
     description,
+    alternates: {
+      canonical: `/work/${project.slug}`,
+    },
     openGraph: {
+      title: project.title,
+      description,
+      url: `/work/${project.slug}`,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
       title: project.title,
       description,
       images,
@@ -202,8 +212,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     notFound();
   }
 
-  const description = project.tagline ?? project.summary;
-  const coverImage = project.cover_image_url ?? project.image_url;
+  const description = project.tagline ?? project.title;
+  const coverImage = project.cover_image_url;
   const videoEmbedUrl = project.video_url ? getLoomEmbedUrl(project.video_url) : null;
   const { previousProject, nextProject } = getAdjacentProjects(projects, slug);
   const techStack = [...(project.project_tech_stack ?? [])].sort(

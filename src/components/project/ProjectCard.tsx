@@ -8,8 +8,8 @@ type ProjectCardProps = {
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const imageSrc = project.cover_image_url ?? project.image_url ?? "/window.svg";
-  const tagline = project.tagline ?? project.summary;
+  const imageSrc = project.cover_image_url ?? "/window.svg";
+  const tagline = project.tagline ?? "Case study";
   const domain = project.domain ?? "Product";
   const techStack = [...(project.project_tech_stack ?? [])].sort(
     (firstItem, secondItem) => firstItem.sort_order - secondItem.sort_order,

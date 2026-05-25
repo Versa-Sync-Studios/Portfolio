@@ -3,10 +3,10 @@
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import type { ProjectScreenshot } from "@/lib/types";
+import type { Screenshot } from "@/lib/types";
 
 type ScreenshotLightboxProps = {
-  screenshots: ProjectScreenshot[];
+  screenshots: Screenshot[];
   projectTitle: string;
 };
 
@@ -15,12 +15,16 @@ export function ScreenshotLightbox({
   projectTitle,
 }: ScreenshotLightboxProps) {
   const [activeScreenshot, setActiveScreenshot] =
-    useState<ProjectScreenshot | null>(null);
+    useState<Screenshot | null>(null);
+  const orderedScreenshots = [...screenshots].sort(
+    (firstScreenshot, secondScreenshot) =>
+      firstScreenshot.order - secondScreenshot.order,
+  );
 
   return (
     <>
       <div className="grid gap-4 lg:grid-cols-2">
-        {screenshots.map((screenshot, index) => (
+        {orderedScreenshots.map((screenshot, index) => (
           <button
             key={`${screenshot.url}-${index}`}
             type="button"
@@ -30,7 +34,7 @@ export function ScreenshotLightbox({
             <span className="relative block aspect-video overflow-hidden rounded-xl bg-surface-subtle">
               <Image
                 src={screenshot.url}
-                alt={screenshot.alt ?? `${projectTitle} screenshot ${index + 1}`}
+                alt={screenshot.caption ?? `${projectTitle} screenshot ${index + 1}`}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-contain p-3 transition-opacity group-hover:opacity-90"
@@ -68,7 +72,7 @@ export function ScreenshotLightbox({
             <div className="relative aspect-video overflow-hidden rounded-xl bg-surface">
               <Image
                 src={activeScreenshot.url}
-                alt={activeScreenshot.alt ?? `${projectTitle} screenshot`}
+                alt={activeScreenshot.caption ?? `${projectTitle} screenshot`}
                 fill
                 sizes="100vw"
                 className="object-contain"
