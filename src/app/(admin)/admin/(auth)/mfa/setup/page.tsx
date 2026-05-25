@@ -24,6 +24,37 @@ export default function AdminMfaSetupPage() {
     const supabase = createClient();
 
     async function enrollFactor() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!mounted) {
+        return;
+      }
+
+      if (!session) {
+        router.replace("/admin/login");
+        return;
+      }
+
+      const { data: factors, error: factorsError } =
+        await supabase.auth.mfa.listFactors();
+
+      if (!mounted) {
+        return;
+      }
+
+      if (factorsError) {
+        setErrorMessage(factorsError.message);
+        setLoading(false);
+        return;
+      }
+
+      if (factors.totp.length > 0) {
+        router.replace("/admin/mfa/verify");
+        return;
+      }
+
       const { data, error } = await supabase.auth.mfa.enroll({
         factorType: "totp",
         friendlyName: "Authenticator App",
@@ -52,7 +83,7 @@ export default function AdminMfaSetupPage() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [router]);
 
   async function handleVerify() {
     if (!enrollment) {

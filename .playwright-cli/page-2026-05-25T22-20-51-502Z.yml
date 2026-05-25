@@ -1,0 +1,34 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Primary navigation" [ref=e3]:
+      - link "SG" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Work" [ref=e6] [cursor=pointer]:
+          - /url: /work
+        - link "About" [ref=e7] [cursor=pointer]:
+          - /url: /about
+        - link "Contact" [ref=e8] [cursor=pointer]:
+          - /url: /contact
+  - main [ref=e52]:
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - heading "Two-factor authentication" [level=1] [ref=e55]
+        - paragraph [ref=e56]: Enter the code from your authenticator app.
+      - generic [ref=e57]:
+        - textbox "Two-factor code" [ref=e58]
+        - button "Verify" [disabled] [ref=e59]
+        - button "Sign out" [ref=e60]
+  - contentinfo [ref=e28]:
+    - generic [ref=e29]:
+      - paragraph [ref=e30]: © 2025 Sai Ganesh. All rights reserved.
+      - generic [ref=e31]:
+        - link "GitHub" [ref=e32] [cursor=pointer]:
+          - /url: https://github.com/
+          - img [ref=e33]
+        - link "LinkedIn" [ref=e37] [cursor=pointer]:
+          - /url: https://www.linkedin.com/
+          - img [ref=e38]
+  - button "Open Next.js Dev Tools" [ref=e47] [cursor=pointer]:
+    - img [ref=e48]
+  - alert [ref=e51]

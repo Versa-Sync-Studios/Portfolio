@@ -1,10 +1,14 @@
-import { AdminPlaceholder } from "@/components/admin/AdminPlaceholder";
+import { ProjectForm } from "@/components/admin/ProjectForm";
+import { createClient } from "@/lib/supabase/server";
+import type { TechStackItem } from "@/lib/types";
 
-export default function AdminNewProjectPage() {
-  return (
-    <AdminPlaceholder
-      title="New Project"
-      description="Project creation form coming soon."
-    />
-  );
+export default async function AdminNewProjectPage() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("tech_stack_items")
+    .select("*")
+    .order("sort_order", { ascending: true });
+  const allTechStack = (data ?? []) as TechStackItem[];
+
+  return <ProjectForm project={null} allTechStack={allTechStack} />;
 }

@@ -16,6 +16,19 @@ export default function AdminMfaVerifyPage() {
     const supabase = createClient();
 
     async function loadFactor() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!mounted) {
+        return;
+      }
+
+      if (!session) {
+        router.replace("/admin/login");
+        return;
+      }
+
       const { data, error } = await supabase.auth.mfa.listFactors();
 
       if (!mounted) {
@@ -35,7 +48,7 @@ export default function AdminMfaVerifyPage() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [router]);
 
   async function handleVerify() {
     if (!factorId) {

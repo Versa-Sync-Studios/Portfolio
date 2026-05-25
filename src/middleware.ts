@@ -41,9 +41,8 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const isLoginRoute = pathname === "/admin/login";
-  const isMfaRoute = pathname.startsWith("/admin/mfa/");
 
-  if (!session && !isLoginRoute && !isMfaRoute) {
+  if (!session && !isLoginRoute) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/admin/login";
     redirectUrl.search = "";
